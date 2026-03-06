@@ -10,8 +10,13 @@ def Edit() :
                 print("1. Edit the title")
                 print("2. Edit the text")
                 print("3. Edit both title and text")
+                print("4. Exit")
 
-                action = input("Enter your choice (1-3): ")
+                action = input("Enter your choice (1-4): ")
+
+                while  action not in ["1", "2", "3","4"]:
+                    print("Invalid choice. Please select 1, 2, 3, or 4.")
+                    action = input("Enter your choice (1-4): ")
 
                 if action == "1":
                     for diary in journal:
@@ -68,3 +73,7 @@ def Edit() :
                                 json.dump(journal, file, indent=4, ensure_ascii=False)
                             print("The title and the text have been edited.")
                             break
+                elif action == "4":
+                    print("Exiting the edit menu.")
+                    from actions import Actions
+                    Actions()

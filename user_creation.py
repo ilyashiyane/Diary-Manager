@@ -15,10 +15,17 @@ def connect():
 
     # If there are no users, create the first account
     if not users:
-        print("There is no user. Please create the first account.")
+        print("There is no user. Please create the first account which is admin account.")
         name = input("Enter your name: ")
         password = getpass.getpass("Enter your password: ")
-        user = {"name": name, "password": password}
+        password_second = getpass.getpass("Enter the second password: ")
+        while password == password_second :
+              print("Passwords must not be the same . Please change the second password.")
+              password_second = getpass.getpass("Enter the second password again : ")
+              if password != password_second :
+                    print("Passwords are different. Account created successfully.")
+                    break
+        user = {"name": name, "password": [password, password_second]}
         users.append(user)
         with open(file_path, "w", encoding="utf-8") as file:
             json.dump(users, file, indent=4, ensure_ascii=False)
@@ -33,11 +40,11 @@ def connect():
 
     # Main loop: ask user what they want to do
     while True:
-        print("\nPress 1 to log in or 0 to create a new account.")
+        print("\nPress 1 to log in as a normal person ,or 2 to log in as admin or 0 to create a new account.")
         choice = input("Your choice: ")
 
         # Handle invalid choice
-        if choice != "1" and choice != "0":
+        if choice != "1" and choice != "2" and choice != "0":
             print("Invalid choice. Please enter 1 to log in or 0 to create a new account.")
             continue  # Go back to the top of the loop
 
@@ -49,7 +56,7 @@ def connect():
             # Check if a user matches the credentials
             found = False
             for user in users:
-                if user["name"] == name and user["password"] == password:
+                if user["name"] == name and user["password"][0] == password:
                     found = True
                     break
 
@@ -79,12 +86,35 @@ def connect():
                 print("This username already exists. Try logging in or choose a different name.")
                 continue  # Go back to the top of the loop
 
-            user = {"name": name, "password": password}
+            user = {"name": name, "password": [password]}
+            
             users.append(user)
             with open(file_path, "w", encoding="utf-8") as file:
                 json.dump(users, file, indent=4, ensure_ascii=False)
             print("Account created successfully. Please log in again.")
             # Problem in your code: 'break' here made user exit instead of logging in
             # Solution: do not break, let user log in immediately
+        elif choice == "2":
+            name = input("Enter your name: ")
+            password = getpass.getpass("Enter your password: ")
+            password_second = getpass.getpass("Enter the second password: ")
+
+            # Check if a user matches the credentials and is admin
+            found = False
+            for user in users:
+                if user["name"] == name and user["password"][0] == password and user["password"][1] == password_second :
+                    found = True
+                    break
+
+            if found:
+                print("Admin login successful.")
+                break  # Exit the while loop after successful login
+            else:
+                print("Error: Invalid credentials or not an admin. Please try again.")
+                i += 1
+                # Limit login attempts
+                if i >= 3:
+                    print("Too many failed attempts. Exiting.")
+                    exit()  # Stop program after 3 failed attempts
     from actions import Actions
     Actions()
