@@ -1,7 +1,7 @@
 import json
-def Actions():
+def Actions(name):
       try:
-            with open(r"C:\Users\Lenovo\Desktop\Mydiary\diaries.json", "r", encoding="utf-8") as file:
+            with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "r", encoding="utf-8") as file:
                 journal = json.load(file)
       except FileNotFoundError:
                 journal = []
@@ -18,22 +18,22 @@ def Actions():
             choice = input("Please select an option (1-7): ")
             if choice=="1" :
                   from add import Add
-                  Add()
+                  Add(name)
             elif choice == "2":
                   from view_all import ViewAll
-                  ViewAll()
+                  ViewAll(name)
             elif choice == "3":
                     from search_by_date import SearchByDate
-                    SearchByDate()
+                    SearchByDate(name)
             elif choice == "4":
                    from search_by_title import SearchByTitle
-                   SearchByTitle()
+                   SearchByTitle(name)
             elif choice == "5":
                     from delete import Delete
-                    Delete()
+                    Delete(name)
             elif choice == "6":
                     from edit import Edit
-                    Edit()
+                    Edit(name)
             elif choice == "7":
                     print("Goodbye!")
                     break

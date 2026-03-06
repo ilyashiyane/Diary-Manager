@@ -1,7 +1,7 @@
 import json
-def ViewAll() :
+def ViewAll(name):
     try:
-            with open(r"C:\Users\Lenovo\Desktop\Mydiary\diaries.json", "r", encoding="utf-8") as file:
+            with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "r", encoding="utf-8") as file:
                 journal = json.load(file)
     except FileNotFoundError:
                 print("No diaries found.")

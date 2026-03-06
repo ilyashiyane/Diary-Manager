@@ -1,10 +1,12 @@
 import json
-try:
-            with open(r"C:\Users\Lenovo\Desktop\Mydiary\diaries.json", "r", encoding="utf-8") as file:
-                journal = json.load(file)
-except FileNotFoundError:
-                journal = []
-def Edit() :
+#try:
+            #with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "r", encoding="utf-8") as file:
+                #journal = json.load(file)
+#except FileNotFoundError:
+                #journal = []
+def Edit(name) :
+                with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "r", encoding="utf-8") as file:
+                     journal = json.load(file)
                 title = input("Please provide the title of the diary you want to edit. ")
                 print("Choose what you want to do:")
                 print("1. Edit the title")
@@ -23,7 +25,7 @@ def Edit() :
                         if diary["Title"].lower() == title.lower():
                             new_title = input("Enter the new title: ").strip()
                             diary["Title"] = new_title
-                            with open(r"C:\Users\Lenovo\Desktop\Mydiary\diaries.json", "w", encoding="utf-8") as file:
+                            with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "w", encoding="utf-8") as file:
                                 json.dump(journal, file, indent=4, ensure_ascii=False)
                             print("The title has been edited.")
                             break
@@ -45,7 +47,7 @@ def Edit() :
                     for diary in journal:
                         if diary["Title"].lower() == title.lower():
                             diary["Text"] = text
-                            with open(r"C:\Users\Lenovo\Desktop\Mydiary\diaries.json", "w", encoding="utf-8") as file:
+                            with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "w", encoding="utf-8") as file:
                                 json.dump(journal, file, indent=4, ensure_ascii=False)
                             print("The text has been edited.")
                             break
@@ -69,7 +71,7 @@ def Edit() :
                         if diary["Title"].lower() == title.lower():
                             diary["Title"] = new_title
                             diary["Text"] = text
-                            with open(r"C:\Users\Lenovo\Desktop\Mydiary\diaries.json", "w", encoding="utf-8") as file:
+                            with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "w", encoding="utf-8") as file:
                                 json.dump(journal, file, indent=4, ensure_ascii=False)
                             print("The title and the text have been edited.")
                             break
