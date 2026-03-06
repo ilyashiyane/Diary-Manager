@@ -13,7 +13,8 @@ def Actions(name):
             print("4. Search for a diary by title")
             print("5. Delete a diary")
             print("6. Edit a diary")
-            print("7. Exit")
+            print("7. log out")
+            #print("8. Exit")
 
             choice = input("Please select an option (1-7): ")
             if choice=="1" :
@@ -35,6 +36,10 @@ def Actions(name):
                     from edit import Edit
                     Edit(name)
             elif choice == "7":
-                    print("Goodbye!")
-                    break
+                    print("Logging out...")
+                    from user_creation import connect
+                    connect()
+            #elif choice == "8":
+                    #print("Goodbye!")
+                    #break
 

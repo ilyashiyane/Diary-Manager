@@ -24,7 +24,7 @@ def connect():
         users.append(user)
         with open(file_path, "w", encoding="utf-8") as file:
             json.dump(users, file, indent=4, ensure_ascii=False)
-        print("Account created successfully. Please log in.") 
+        print("Admin account created successfully. Please log in.") 
     i = 0
     while True:
         print("\nPress 1 to log in as a normal person ,or 2 to log in as admin or 0 to create a new account.")
@@ -42,6 +42,8 @@ def connect():
                     break
             if found:
                 print("Login successful.")
+                from actions import Actions
+                Actions(name)
                 break  
             else:
                 print("Error: Invalid credentials. Please try again.")
@@ -49,6 +51,8 @@ def connect():
                 if i >= 3:
                     print("Too many failed attempts. Exiting.")
                     exit()  
+            #from actions import Actions
+            #Actions(name)
         elif choice == "0":
             name = input("Enter your name: ")
             password = getpass.getpass("Enter your password: ")
@@ -67,6 +71,8 @@ def connect():
             print("Account created successfully. Please log in again.")
             with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "x", encoding="utf-8") as file:
                 json.dump([], file, indent=4, ensure_ascii=False)
+            from actions import Actions
+            Actions(name)
         elif choice == "2":
             name = input("Enter your name: ")
             password = getpass.getpass("Enter your password: ")
@@ -78,6 +84,8 @@ def connect():
                     break
             if found:
                 print("Admin login successful.")
+                from admin import Admin
+                Admin()
                 break  
             else:
                 print("Error: Invalid credentials or not an admin. Please try again.")
@@ -85,5 +93,5 @@ def connect():
                 if i >= 3:
                     print("Too many failed attempts. Exiting.")
                     exit()  
-    from actions import Actions
-    Actions(name)
+    #from actions import Actions
+    #Actions(name)
