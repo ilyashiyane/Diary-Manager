@@ -63,16 +63,21 @@ def connect():
                     break
             if duplicate:
                 print("This username already exists. Try logging in or choose a different name.")
-                continue  
-            user = {"name": name, "password": [password]}
-            users.append(user)
-            with open(file_path, "w", encoding="utf-8") as file:
+                continue 
+            from password_criteria import password_criteria
+            if not password_criteria(password) : 
+                print("Password must be at least 8 characters long.")
+                continue
+            elif password_criteria(password) :
+             user = {"name": name, "password": [password]}
+             users.append(user)
+             with open(file_path, "w", encoding="utf-8") as file:
                 json.dump(users, file, indent=4, ensure_ascii=False)
-            print("Account created successfully. Please log in again.")
-            with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "x", encoding="utf-8") as file:
+             print("Account created successfully. Please log in again.")
+             with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "x", encoding="utf-8") as file:
                 json.dump([], file, indent=4, ensure_ascii=False)
-            from actions import Actions
-            Actions(name)
+             from actions import Actions
+             Actions(name)
         elif choice == "2":
             name = input("Enter your name: ")
             password = getpass.getpass("Enter your password: ")
