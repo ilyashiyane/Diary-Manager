@@ -5,5 +5,17 @@
             "ADMIN",
             "ADMIN1"
         ]
+    },
+    {
+        "name": "",
+        "password": [
+            ""
+        ]
+    },
+    {
+        "name": "JE",
+        "password": [
+            ""
+        ]
     }
 ]
