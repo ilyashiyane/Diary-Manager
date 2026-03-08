@@ -33,8 +33,9 @@ def connect():
             print("Invalid choice. Please enter 1 to log in or 0 to create a new account.")
             continue  
         if choice == "1":
+            from brute_force import brute_force
             name = input("Enter your name: ")
-            password = getpass.getpass("Enter your password: ")
+            password,time,tries = brute_force(name)  #getpass.getpass("Enter your password: ")
             found = False
             for user in users:
                 if user["name"] == name and user["password"][0] == password:
@@ -42,15 +43,17 @@ def connect():
                     break
             if found:
                 print("Login successful.")
+                print(f"Time taken to brute-force the password: {time:.2f} seconds")
+                print(f"Number of attempts: {tries}")
                 from actions import Actions
                 Actions(name)
                 break  
             else:
                 print("Error: Invalid credentials. Please try again.")
-                i += 1
-                if i >= 3:
-                    print("Too many failed attempts. Exiting.")
-                    exit()  
+                #i += 1
+                #if i >= 3:
+                    #print("Too many failed attempts. Exiting.")
+                    #exit()  
             #from actions import Actions
             #Actions(name)
         elif choice == "0":

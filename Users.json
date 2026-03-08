@@ -5,5 +5,65 @@
             "ADMIN",
             "ADMIN1"
         ]
+    },
+    {
+        "name": "Javier",
+        "password": [
+            "Javier"
+        ]
+    },
+    {
+        "name": "H",
+        "password": [
+            "A"
+        ]
+    },
+    {
+        "name": "Micah",
+        "password": [
+            "MICA"
+        ]
+    },
+    {
+        "name": "J",
+        "password": [
+            "AMIne"
+        ]
+    },
+    {
+        "name": "ACHRAF",
+        "password": [
+            "ouia"
+        ]
+    },
+    {
+        "name": "KARIMA",
+        "password": [
+            "ato"
+        ]
+    },
+    {
+        "name": "HADIL",
+        "password": [
+            "HADI"
+        ]
+    },
+    {
+        "name": "MARRY",
+        "password": [
+            "{]"
+        ]
+    },
+    {
+        "name": "FRANCE",
+        "password": [
+            "FR##1"
+        ]
+    },
+    {
+        "name": "ANA",
+        "password": [
+            "ANA123"
+        ]
     }
 ]
