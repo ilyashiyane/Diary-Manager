@@ -53,7 +53,7 @@ def connect():
                     exit()  
             #from actions import Actions
             #Actions(name)
-        elif choice == "0":
+        elif choice == "0":  
             name = input("Enter your name: ")
             if name=="" or len(name)<3 or len(name)>30:
                 print("Username cannot be empty and must be between 3 and 30 characters long. Please enter a valid username.")
