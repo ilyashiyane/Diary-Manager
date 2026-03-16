@@ -1,0 +1,7 @@
+# Fichiers Python compilés
+__pycache__/
+# Environnements 
+.env/
+# Dossiers contenant des données personnelles ou temporaires
+Diaries/
+Users.json
