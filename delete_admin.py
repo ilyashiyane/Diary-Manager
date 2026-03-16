@@ -1,6 +1,10 @@
 def DeleteAdmin():
     import json
-    file_path = "C:/Users/Lenovo/Desktop/Mydiary/users.json"
+    import os
+    from dotenv import load_dotenv
+    load_dotenv()
+    users_path=os.getenv("USERSJSON_PATH")
+    file_path = users_path
     name = input("Enter the username of the user to delete: ")
 
     with open(file_path, "r", encoding="utf-8") as file:

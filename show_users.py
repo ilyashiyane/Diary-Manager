@@ -1,6 +1,10 @@
 import json
+import os
+from dotenv import load_dotenv
 def ShowUsers() :
-    file_path = "C:/Users/Lenovo/Desktop/Mydiary/users.json"
+    load_dotenv()
+    users_path=os.getenv("USERSJSON_PATH")
+    file_path = users_path
     with open(file_path, "r", encoding="utf-8") as file:
         users = json.load(file)
     if not users:

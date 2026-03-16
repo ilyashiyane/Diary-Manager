@@ -1,8 +1,12 @@
 import json
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 def Add(name) :
+     load_dotenv()
+     diaries_path = os.getenv("DIARIES_PATH")
      try:
-            with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "r", encoding="utf-8") as file:
+            with open(f"{diaries_path}/{name}.json", "r", encoding="utf-8") as file:
                 journal = json.load(file)
      except FileNotFoundError:
                 journal = []
@@ -56,5 +60,5 @@ def Add(name) :
 
      journal.append(diaries)
 
-     with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "w", encoding="utf-8") as file:
+     with open(f"{diaries_path}/{name}.json", "w", encoding="utf-8") as file:
                 json.dump(journal, file, indent=4, ensure_ascii=False)

@@ -1,8 +1,13 @@
 import json
 import getpass
+import os 
+from dotenv import load_dotenv
 
 def connect():
-    file_path = r"C:\Users\Lenovo\Desktop\Mydiary\Users.json"
+    load_dotenv()
+    diaries_path=os.getenv("DIARIES_PATH")
+    users_path=os.getenv("USERSJSON_PATH")
+    file_path = users_path
     
     try:
         with open(file_path, "r", encoding="utf-8") as file:
@@ -77,7 +82,7 @@ def connect():
              with open(file_path, "w", encoding="utf-8") as file:
                 json.dump(users, file, indent=4, ensure_ascii=False)
              print("Account created successfully. Please log in again.")
-             with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "x", encoding="utf-8") as file:
+             with open(f"{diaries_path}/{name}.json", "x", encoding="utf-8") as file:
                 json.dump([], file, indent=4, ensure_ascii=False)
              from actions import Actions
              Actions(name)
