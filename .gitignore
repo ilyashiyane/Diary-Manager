@@ -1,0 +1,4 @@
+.env
+Users.json
+__pycache__/
+Diaries/
