@@ -1,6 +1,9 @@
 import json
 import os
 from dotenv import load_dotenv
+from rich.console import Console
+from rich.panel import Panel
+from rich.align import Align
 
 #try:
             #with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "r", encoding="utf-8") as file:
@@ -8,12 +11,13 @@ from dotenv import load_dotenv
 #except FileNotFoundError:
                 #journal = []
 def Edit(name) :
+                console=Console()
                 load_dotenv()
                 diaries_path=os.getenv("DIARIES_PATH")
                 with open(f"{diaries_path}/{name}.json", "r", encoding="utf-8") as file:
                      journal = json.load(file)
                 title = input("Please provide the title of the diary you want to edit. ")
-                print("Choose what you want to do:")
+                console.print(Align("Choose what you want to do:",align="center",style="italic green"))
                 print("1. Edit the title")
                 print("2. Edit the text")
                 print("3. Edit both title and text")

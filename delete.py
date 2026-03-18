@@ -1,15 +1,19 @@
 import json
 from dotenv import load_dotenv
 import os
+from rich.console import Console
+from rich.align import Align
+
 
 def Delete(name) :
+        console=Console()
         load_dotenv()
         diaries_path = os.getenv("DIARIES_PATH")
         #try:
         with open(f"{diaries_path}/{name}.json", "r", encoding="utf-8") as file:
                 journal = json.load(file)
         if not journal:
-                    print("No diaries found.")
+                    console.print(Align("No diaries found.",align="center",style="bold red"))
                     return
         #except FileNotFoundError:
                 #journal = []
@@ -21,5 +25,5 @@ def Delete(name) :
                 journal.remove(diary)
                 with open(f"{diaries_path}/{name}.json", "w", encoding="utf-8") as file:
                     json.dump(journal, file, indent=4, ensure_ascii=False)
-                print("The diary has been deleted.")
+                console.print(Align("The diary has been deleted.",align="center",style="bold red"))
                 break
