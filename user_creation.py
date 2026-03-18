@@ -2,9 +2,13 @@ import json
 import getpass
 import os 
 from dotenv import load_dotenv
+from rich.align import Align
+from rich.console import Console
+from rich.panel import Panel
 from password_criteria import password_criteria
 
 def connect():
+    console=Console()
     load_dotenv()
     diaries_path=os.getenv("DIARIES_PATH")
     users_path=os.getenv("USERSJSON_PATH")
@@ -23,7 +27,7 @@ def connect():
             #print("The password")
         password_second = getpass.getpass("Enter the second password: ")
         while password == password_second :
-              print("Passwords must not be the same . Please change the second password.")
+              console.print(Align("Passwords must not be the same . Please change the second password.",align="center",style="bold red"))
               password_second = getpass.getpass("Enter the second password again : ")
               if password != password_second :
                     print("Passwords are different. Account created successfully.")
@@ -38,7 +42,7 @@ def connect():
         print("\nPress 1 to log in as a normal person ,or 2 to log in as admin or 0 to create a new account.")
         choice = input("Your choice: ")
         if choice != "1" and choice != "2" and choice != "0":
-            print("Invalid choice. Please enter 1 to log in or 0 to create a new account.")
+            console.print(Align("Invalid choice. Please enter 1 to log in or 0 to create a new account.",align="center",style="bold red"))
             continue  
         if choice == "1":
             name = input("Enter your name: ")
@@ -49,15 +53,15 @@ def connect():
                     found = True
                     break
             if found:
-                print("Login successful.")
+                console.print(Align("Login successful.",align="center",style="italic green"))
                 from actions import Actions
                 Actions(name)
                 break  
             else:
-                print("Error: Invalid credentials. Please try again.")
+                console.print(Align("Error: Invalid credentials. Please try again.",align="center",style="bold red"))
                 i += 1
                 if i >= 3:
-                    print("Too many failed attempts. Exiting.")
+                    console.print(Align("Too many failed attempts. Exiting.",align="center",style="italic red"))
                     exit()  
             #from actions import Actions
             #Actions(name)
@@ -74,21 +78,21 @@ def connect():
                     duplicate = True
                     break
             if duplicate:
-                print("This username already exists. Try logging in or choose a different name.")
+                console.print(Align("This username already exists. Try logging in or choose a different name.",align="center",style="bold red"))
                 continue 
             break
           while True :
             password = getpass.getpass("Enter your password: ")
             from password_criteria import password_criteria
             if not password_criteria(password) : 
-                print("Password must be at least 8 characters long.")
+                print(Align("Password must be at least 8 characters long.",align="center",style="bold red"))
                 continue
             elif password_criteria(password) :
              user = {"name": name, "password": [password]}
              users.append(user)
              with open(file_path, "w", encoding="utf-8") as file:
                 json.dump(users, file, indent=4, ensure_ascii=False)
-             print("Account created successfully. Please log in again.")
+             console.print(Align("Account created successfully. Please log in again.",align="center",style="italic green"))
              with open(f"{diaries_path}/{name}.json", "x", encoding="utf-8") as file:
                 json.dump([], file, indent=4, ensure_ascii=False)
              break
