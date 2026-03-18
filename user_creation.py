@@ -2,6 +2,7 @@ import json
 import getpass
 import os 
 from dotenv import load_dotenv
+from password_criteria import password_criteria
 
 def connect():
     load_dotenv()
@@ -18,6 +19,8 @@ def connect():
         print("There is no user. Please create the first account which is admin account.")
         name = input("Enter your name: ")
         password = getpass.getpass("Enter your password: ")
+        #while not password_criteria(password) :
+            #print("The password")
         password_second = getpass.getpass("Enter the second password: ")
         while password == password_second :
               print("Passwords must not be the same . Please change the second password.")
@@ -59,11 +62,12 @@ def connect():
             #from actions import Actions
             #Actions(name)
         elif choice == "0":  
+          while True :
             name = input("Enter your name: ")
             if name=="" or len(name)<3 or len(name)>30:
                 print("Username cannot be empty and must be between 3 and 30 characters long. Please enter a valid username.")
                 continue
-            password = getpass.getpass("Enter your password: ")
+            #password = getpass.getpass("Enter your password: ")
             duplicate = False
             for user in users:
                 if user["name"] == name:
@@ -72,6 +76,9 @@ def connect():
             if duplicate:
                 print("This username already exists. Try logging in or choose a different name.")
                 continue 
+            break
+          while True :
+            password = getpass.getpass("Enter your password: ")
             from password_criteria import password_criteria
             if not password_criteria(password) : 
                 print("Password must be at least 8 characters long.")
@@ -84,8 +91,9 @@ def connect():
              print("Account created successfully. Please log in again.")
              with open(f"{diaries_path}/{name}.json", "x", encoding="utf-8") as file:
                 json.dump([], file, indent=4, ensure_ascii=False)
-             from actions import Actions
-             Actions(name)
+             break
+          from actions import Actions
+          Actions(name)
         elif choice == "2":
             name = input("Enter your name: ")
             password = getpass.getpass("Enter your password: ")
