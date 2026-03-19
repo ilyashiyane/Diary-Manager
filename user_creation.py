@@ -6,6 +6,7 @@ from rich.align import Align
 from rich.console import Console
 from rich.panel import Panel
 from password_criteria import password_criteria
+import hashlib
 
 def connect():
     console=Console()
@@ -20,23 +21,24 @@ def connect():
     except (FileNotFoundError, json.JSONDecodeError):
         users = []  
     if not users:
-        print("There is no user. Please create the first account which is admin account.")
+        console.print(Align("There is no user. Please create the first account which is admin account.",align="center",style="italic"))
         name = input("Enter your name: ")
         password = getpass.getpass("Enter your password: ")
-        #while not password_criteria(password) :
-            #print("The password")
+        
         password_second = getpass.getpass("Enter the second password: ")
         while password == password_second :
               console.print(Align("Passwords must not be the same . Please change the second password.",align="center",style="bold red"))
               password_second = getpass.getpass("Enter the second password again : ")
               if password != password_second :
-                    print("Passwords are different. Account created successfully.")
+                    console.print(Align("Passwords are different. Account created successfully.",align="center",style="italic green"))
                     break
-        user = {"name": name, "password": [password, password_second]}
+        password_hash=hashlib.sha256(password.encode()).hexdigest()
+        password_hash_second=hashlib.sha256(password_second.encode()).hexdigest()
+        user = {"name": name, "password": [password_hash, password_hash_second]}
         users.append(user)
         with open(file_path, "w", encoding="utf-8") as file:
             json.dump(users, file, indent=4, ensure_ascii=False)
-        print("Admin account created successfully. Please log in.") 
+        console.print(Align("Admin account created successfully. Please log in.",align="center",style="italic green"))
     i = 0
     while True:
         console.print(Align("\nPress 1 to log in as a normal person ,or 2 to log in as admin or 0 to create a new account.",align="center",style="italic green"))
@@ -45,11 +47,15 @@ def connect():
             console.print(Align("Invalid choice. Please enter 1 to log in or 0 to create a new account.",align="center",style="bold red"))
             continue  
         if choice == "1":
+            if len(users)==1 :
+                console.print(Align("There is no user please create one first by pressing 0",align="center",style="bold red"))
+                continue
             name = input("Enter your name: ")
             password = getpass.getpass("Enter your password: ")
+            password_hash=hashlib.sha256(password.encode()).hexdigest()
             found = False
             for user in users:
-                if user["name"] == name and user["password"][0] == password:
+                if user["name"] == name and user["password"][0] == password_hash:
                     found = True
                     break
             if found:
@@ -61,17 +67,14 @@ def connect():
                 console.print(Align("Error: Invalid credentials. Please try again.",align="center",style="bold red"))
                 i += 1
                 if i >= 3:
-                    console.print(Align("Too many failed attempts. Exiting.",align="center",style="italic red"))
+                    console.print(Align("Too many failed attempts. Exiting.",align="center",style="bold red"))
                     exit()  
-            #from actions import Actions
-            #Actions(name)
         elif choice == "0":  
           while True :
             name = input("Enter your name: ")
             if name=="" or len(name)<3 or len(name)>30:
-                print("Username cannot be empty and must be between 3 and 30 characters long. Please enter a valid username.")
+                console.print(Align("Username cannot be empty and must be between 3 and 30 characters long. Please enter a valid username.",align="center",style="bold red"))
                 continue
-            #password = getpass.getpass("Enter your password: ")
             duplicate = False
             for user in users:
                 if user["name"] == name:
@@ -85,10 +88,11 @@ def connect():
             password = getpass.getpass("Enter your password: ")
             from password_criteria import password_criteria
             if not password_criteria(password) : 
-                print(Align("Password must be at least 8 characters long.",align="center",style="bold red"))
+                console.print(Align("Password must be at least 8 characters long.",align="center",style="bold red"))
                 continue
             elif password_criteria(password) :
-             user = {"name": name, "password": [password]}
+             password_hash=hashlib.sha256(password.encode()).hexdigest()
+             user = {"name": name, "password": [password_hash]}
              users.append(user)
              with open(file_path, "w", encoding="utf-8") as file:
                 json.dump(users, file, indent=4, ensure_ascii=False)
@@ -101,22 +105,24 @@ def connect():
         elif choice == "2":
             name = input("Enter your name: ")
             password = getpass.getpass("Enter your password: ")
+            password_hash=hashlib.sha256(password.encode()).hexdigest()
             password_second = getpass.getpass("Enter the second password: ")
+            password_second_hash=hashlib.sha256(password_second.encode()).hexdigest()
             found = False
             for user in users:
-                if user["name"] == name and user["password"][0] == password and user["password"][1] == password_second :
+                if user["name"] == name and user["password"][0] == password_hash and user["password"][1] == password_second_hash :
                     found = True
                     break
             if found:
-                print("Admin login successful.")
+                console.print(Align("Admin login successful.",align="center",style="italic green"))
                 from admin import Admin
                 Admin()
                 break  
             else:
-                print("Error: Invalid credentials or not an admin. Please try again.")
+                console.print(Align("Error: Invalid credentials or not an admin. Please try again.",align="center",style="bold red"))
                 i += 1
                 if i >= 3:
-                    print("Too many failed attempts. Exiting.")
+                    console.print(Align("Too many failed attempts. Exiting.",align="center",style="bold red"))
                     exit()  
-    #from actions import Actions
-    #Actions(name)
+    
+    
