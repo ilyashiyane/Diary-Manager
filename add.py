@@ -46,6 +46,7 @@ def Add(name) :
                 console.print(Align("The title is necessary—please insert it!",align="center",style="bold red"))
 
      lines = []
+     console.print(Align("Write you diary here",align="center",style="italic green"))
      while True:
         line = input()
         if line.lower() == "end" or not line:

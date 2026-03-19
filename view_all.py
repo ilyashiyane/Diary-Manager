@@ -16,9 +16,19 @@ def ViewAll(name):
                 console.print(Align("No diaries found.",align="center",style="bold red"))
     if not journal:
                 console.print(Align("No diaries found.",align="center",style="bold red"))
+    
     else:
-            for diary in journal:
-                console.print(Align(f"Title: {diary['Title']}",align="center",style="italic green"))
-                console.print(Align(f"Date: {diary['Date']}",align="center"))
-                console.print(Align(f"Text: {diary['Text']}",align="center"))
-                
+            console.print(Align("What do you want ?",align="center",style="italic green"))
+            print("1.Press 1 to view  all diarie's title")
+            print("2.Press 2 to view all diaries ")
+            choice=int(input("Give your choice"))
+            if choice==1 :
+              for diary in journal:
+                console.print(Align(f"[italic green] Title:[/italic green] {diary['Title']}",align="center"))
+            elif choice==2 :
+              for diary in journal:
+                console.print(Align(f"[italic green] Title:[/italic green] {diary['Title']}",align="center"))
+                console.print(Align(f"[italic green] Date:[/italic green] {diary['Date']}",align="center"))
+                console.print(Align(f"[italic green] Text: [/italic green]{diary['Text']}",align="center"))
+            
+    

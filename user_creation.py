@@ -7,14 +7,12 @@ from rich.console import Console
 from rich.panel import Panel
 from password_criteria import password_criteria
 import hashlib
-
 def connect():
     console=Console()
     load_dotenv()
     diaries_path=os.getenv("DIARIES_PATH")
     users_path=os.getenv("USERSJSON_PATH")
     file_path = users_path
-    
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             users = json.load(file)
