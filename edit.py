@@ -4,12 +4,6 @@ from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
-
-#try:
-            #with open(f"C:/Users/Lenovo/Desktop/Mydiary/Diaries/{name}.json", "r", encoding="utf-8") as file:
-                #journal = json.load(file)
-#except FileNotFoundError:
-                #journal = []
 def Edit(name) :
                 console=Console()
                 load_dotenv()
@@ -17,6 +11,19 @@ def Edit(name) :
                 with open(f"{diaries_path}/{name}.json", "r", encoding="utf-8") as file:
                      journal = json.load(file)
                 title = input("Please provide the title of the diary you want to edit. ")
+                found=False
+                for diaries in journal :
+                     if diaries["Title"]==title :
+                          found=True
+                          break
+                while not found :
+                 console.print(Align("No such diary with this title try another title",align="center",style="bold red"))
+                 title = input("Please provide the title of the diary you want to edit. ")
+                 for diaries in journal :
+                     if diaries["Title"]==title :
+                          found=True
+                          break
+                     
                 console.print(Align("Choose what you want to do:",align="center",style="italic green"))
                 print("1. Edit the title")
                 print("2. Edit the text")
@@ -26,8 +33,8 @@ def Edit(name) :
                 action = input("Enter your choice (1-4): ")
 
                 while  action not in ["1", "2", "3","4"]:
-                    print("Invalid choice. Please select 1, 2, 3, or 4.")
-                    action = input("Enter your choice (1-4): ")
+                    action=input("Invalid choice. Please select 1, 2, 3, or 4.")
+                    
 
                 if action == "1":
                     for diary in journal:
@@ -36,17 +43,15 @@ def Edit(name) :
                             diary["Title"] = new_title
                             with open(f"{diaries_path}/{name}.json", "w", encoding="utf-8") as file:
                                 json.dump(journal, file, indent=4, ensure_ascii=False)
-                            print("The title has been edited.")
+                            console.print(Align("The title has been edited.",align="center",style="italic green"))
                             break
-
                 elif action == "2":
                     lines = []
-                    print("Enter the new text (type 'End' on a new line to finish):")
-
+                    console.print(Align("Enter the new text (type 'End' on a new line to finish):",align="center",style="italic green"))
                     while True:
                         line = input()
                         if line.lower() == "end" or not line:
-                            print("Your text is added")
+                            console.print(Align("Your text is added",align="center",style="italic green"))
                             break
                         else:
                             lines.append(line)
@@ -58,18 +63,18 @@ def Edit(name) :
                             diary["Text"] = text
                             with open(f"{diaries_path}/{name}.json", "w", encoding="utf-8") as file:
                                 json.dump(journal, file, indent=4, ensure_ascii=False)
-                            print("The text has been edited.")
+                            console.print(Align("The text has been edited.",align="center",style="italic green"))
                             break
 
                 elif action == "3":
                     new_title = input("Give the new title: ").strip()
                     lines = []
-                    print("Enter the new text (type 'End' on a new line to finish):")
+                    console.print(Align("Enter the new text (type 'End' on a new line to finish):",align="center",style="italic green"))
 
                     while True:
                         line = input()
                         if line.lower() == "end" or not line:
-                            print("Your text is added")
+                            console.print(Align("Your text is added",align="center",style="italic green"))
                             break
                         else:
                             lines.append(line)
@@ -82,9 +87,10 @@ def Edit(name) :
                             diary["Text"] = text
                             with open(f"{diaries_path}/{name}.json", "w", encoding="utf-8") as file:
                                 json.dump(journal, file, indent=4, ensure_ascii=False)
-                            print("The title and the text have been edited.")
+                            console.print(Align("The title and the text have been edited.",align="center",style="italic green"))
+                            
                             break
                 elif action == "4":
-                    print("Exiting the edit menu.")
+                    console.print(Align("Exiting the edit menu.",align="center",style="bold red"))
                     from actions import Actions
-                    Actions()
+                    Actions(name)

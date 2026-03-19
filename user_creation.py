@@ -39,7 +39,7 @@ def connect():
         print("Admin account created successfully. Please log in.") 
     i = 0
     while True:
-        print("\nPress 1 to log in as a normal person ,or 2 to log in as admin or 0 to create a new account.")
+        console.print(Align("\nPress 1 to log in as a normal person ,or 2 to log in as admin or 0 to create a new account.",align="center",style="italic green"))
         choice = input("Your choice: ")
         if choice != "1" and choice != "2" and choice != "0":
             console.print(Align("Invalid choice. Please enter 1 to log in or 0 to create a new account.",align="center",style="bold red"))

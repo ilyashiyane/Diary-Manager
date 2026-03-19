@@ -32,7 +32,7 @@ def Add(name) :
                         dates = datetime.combine(date_format, time_format)
 
                     except ValueError:
-                        print("The current date will be used")
+                        console.print(Align("The current date will be used",align="center",style="bold red"))
                         dates = datetime.now()
      elif  dats.strip() or  hour.strip():
           date_format = datetime.strptime(dats, "%Y-%m-%d").date()
@@ -43,13 +43,13 @@ def Add(name) :
      while not title:
             title = input("Provide the title: ").strip()
             if not title:
-                print("The title is necessary—please insert it!")
+                console.print(Align("The title is necessary—please insert it!",align="center",style="bold red"))
 
      lines = []
      while True:
         line = input()
         if line.lower() == "end" or not line:
-                    print("Your text is added")
+                    console.print(Align("Your diary is added",align="center",style="italic green"))
                     break
         else:
                    lines.append(line)

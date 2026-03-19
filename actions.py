@@ -62,11 +62,11 @@ def Actions(name):
             elif choice == "8":
                     text=Align("LOG OUT",align="center")
                     console.print(Panel(text))
-                    print("Logging out...")
+                    console.print("Logging out...",style="bold red")
                     from user_creation import connect
                     connect()
             else :
-                   console.print("[bold red]Error ! Please chose a number between 0 and 8")
+                   console.print("[bold red]Error ! Please choose a number between 0 and 8")
                    continue
             
 
