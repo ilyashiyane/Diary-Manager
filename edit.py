@@ -1,5 +1,6 @@
 import json
 import os
+import questionary
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
@@ -25,18 +26,19 @@ def Edit(name) :
                           break
                      
                 console.print(Align("Choose what you want to do:",align="center",style="italic green"))
-                print("1. Edit the title")
-                print("2. Edit the text")
-                print("3. Edit both title and text")
-                print("4. Exit")
-
-                action = input("Enter your choice (1-4): ")
-
-                while  action not in ["1", "2", "3","4"]:
-                    action=input("Invalid choice. Please select 1, 2, 3, or 4.")
+                choice = questionary.select(
+    "What would you like to edit?",
+    choices=[
+        "✏️ Edit the title",
+        "📝 Edit the text",
+        "🖋️ Edit both title and text",
+        "🚪 Exit"
+    ]
+).ask()
+                
                     
 
-                if action == "1":
+                if choice == "✏️ Edit the title":
                     for diary in journal:
                         if diary["Title"].lower() == title.lower():
                             new_title = input("Enter the new title: ").strip()
@@ -45,7 +47,7 @@ def Edit(name) :
                                 json.dump(journal, file, indent=4, ensure_ascii=False)
                             console.print(Align("The title has been edited.",align="center",style="italic green"))
                             break
-                elif action == "2":
+                elif choice == "📝 Edit the text":
                     lines = []
                     console.print(Align("Enter the new text (type 'End' on a new line to finish):",align="center",style="italic green"))
                     while True:
@@ -66,7 +68,7 @@ def Edit(name) :
                             console.print(Align("The text has been edited.",align="center",style="italic green"))
                             break
 
-                elif action == "3":
+                elif choice == "🖋️ Edit both title and text":
                     new_title = input("Give the new title: ").strip()
                     lines = []
                     console.print(Align("Enter the new text (type 'End' on a new line to finish):",align="center",style="italic green"))
@@ -90,7 +92,7 @@ def Edit(name) :
                             console.print(Align("The title and the text have been edited.",align="center",style="italic green"))
                             
                             break
-                elif action == "4":
+                elif choice == "🚪 Exit":
                     console.print(Align("Exiting the edit menu.",align="center",style="bold red"))
                     from actions import Actions
                     Actions(name)

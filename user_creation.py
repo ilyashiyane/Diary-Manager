@@ -1,6 +1,7 @@
 import json
 import getpass
 import os 
+import questionary
 from dotenv import load_dotenv
 from rich.align import Align
 from rich.console import Console
@@ -39,12 +40,15 @@ def connect():
         console.print(Align("Admin account created successfully. Please log in.",align="center",style="italic green"))
     i = 0
     while True:
-        console.print(Align("\nPress 1 to log in as a normal person ,or 2 to log in as admin or 0 to create a new account.",align="center",style="italic green"))
-        choice = input("Your choice: ")
-        if choice != "1" and choice != "2" and choice != "0":
-            console.print(Align("Invalid choice. Please enter 1 to log in or 0 to create a new account.",align="center",style="bold red"))
-            continue  
-        if choice == "1":
+        choice = questionary.select(
+    "Choose an option:",
+    choices=[
+        "🆕 Create a new account",
+        "👤 Log in as a normal user",
+        "🛡️ Log in as admin"
+    ]
+).ask()  
+        if choice == "👤 Log in as a normal user":
             if len(users)==1 :
                 console.print(Align("There is no user please create one first by pressing 0",align="center",style="bold red"))
                 continue
@@ -67,7 +71,7 @@ def connect():
                 if i >= 3:
                     console.print(Align("Too many failed attempts. Exiting.",align="center",style="bold red"))
                     exit()  
-        elif choice == "0":  
+        elif choice == "🆕 Create a new account":  
           while True :
             name = input("Enter your name: ")
             if name=="" or len(name)<3 or len(name)>30:
@@ -100,7 +104,7 @@ def connect():
              break
           from actions import Actions
           Actions(name)
-        elif choice == "2":
+        elif choice == "🛡️ Log in as admin":
             name = input("Enter your name: ")
             password = getpass.getpass("Enter your password: ")
             password_hash=hashlib.sha256(password.encode()).hexdigest()

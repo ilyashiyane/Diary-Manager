@@ -1,5 +1,6 @@
 import json
 import os
+import questionary
 from dotenv import load_dotenv
 from rich.console import Console 
 from rich.panel import Panel
@@ -17,49 +18,54 @@ def Actions(name):
       while True:
             text1=Align("Mydiary", align="center")
             console.print(Panel(text1))
-            print("1. Add a new diary")
-            print("2. View all diaries")
-            print("3. Search for a diary by date")
-            print("4. Search for a diary by title")
-            print("5. Delete a diary")
-            print("6. Edit a diary")
-            print("7. Settings")
-            print("8. Log out")
+            choice = questionary.select(
+    "What would you like to do today?",
+    choices=[
+        "📖 Add a new diary",
+        "📂 View all diaries",
+        "🔍 Search for a diary by date",
+        "🔍 Search for a diary by title",
+        "📖 Edit a diary",
+        "🗑️ Delete a diary",
+        "⚙️ Settings",
+        "🚪 Log out"
+    ]
+).ask()
             
-            choice = input("Please select an option (1-8): ")
-            if choice=="1" :
+            #choice = input("Please select an option (1-8): ")
+            if choice=="📖 Add a new diary" :
                   text=Align("ADD A NEW DIARY",align="center")
                   console.print(Panel(text))
                   from add import Add
                   Add(name)
-            elif choice == "2":
+            elif choice == "📂 View all diaries":
                   text=Align("View ALL DIARIES",align="center")
                   console.print(Panel(text))
                   from view_all import ViewAll
                   ViewAll(name)
-            elif choice == "3":
+            elif choice == "🔍 Search for a diary by date":
                     text=Align("SEARCH A DIARY BY DATE",align="center")
                     console.print(Panel(text))
                     from search_by_date import SearchByDate
                     SearchByDate(name)
-            elif choice == "4":
+            elif choice == "🔍 Search for a diary by title":
                    text=Align("SEARCH A DIARY BY TITLE",align="center")
                    console.print(Panel(text))
                    from search_by_title import SearchByTitle
                    SearchByTitle(name)
-            elif choice == "5":
+            elif choice == "🗑️ Delete a diary":
                     text=Align("DELETE A DIARY",align="center")
                     console.print(Panel(text))
                     from delete import Delete
                     Delete(name)
-            elif choice == "6":
+            elif choice == "📖 Edit a diary":
                     text=Align("EDIT A DIARY",align="center")
                     console.print(Panel(text))
                     from edit import Edit
                     Edit(name)
-            elif choice == "7":
+            elif choice == "⚙️ Settings":
                    pass
-            elif choice == "8":
+            elif choice == "🚪 Log out":
                     text=Align("LOG OUT",align="center")
                     console.print(Panel(text))
                     console.print("Logging out...",style="bold red")

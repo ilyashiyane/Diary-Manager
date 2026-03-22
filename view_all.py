@@ -1,5 +1,6 @@
 import json
 import os
+import questionary
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
@@ -19,13 +20,18 @@ def ViewAll(name):
     
     else:
             console.print(Align("What do you want ?",align="center",style="italic green"))
-            print("1.Press 1 to view  all diarie's title")
-            print("2.Press 2 to view all diaries ")
-            choice=int(input("Give your choice"))
-            if choice==1 :
+            choice = questionary.select(
+    "What would you like to do?",
+    choices=[
+        "📄 View all diary titles",
+        "📚 View all diaries"
+    ]
+).ask()
+            
+            if choice=="📄 View all diary titles":
               for diary in journal:
                 console.print(Align(f"[italic green] Title:[/italic green] {diary['Title']}",align="center"))
-            elif choice==2 :
+            elif choice=="📚 View all diaries" :
               for diary in journal:
                 console.print(Align(f"[italic green] Title:[/italic green] {diary['Title']}",align="center"))
                 console.print(Align(f"[italic green] Date:[/italic green] {diary['Date']}",align="center"))
