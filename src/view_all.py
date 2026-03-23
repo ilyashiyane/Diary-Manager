@@ -6,6 +6,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
 from questionary import Style
+from rich.table import Table
 def ViewAll(name):
     console=Console()
     load_dotenv()
@@ -33,9 +34,12 @@ def ViewAll(name):
 ).ask()
             
             if choice=="📄 View all diary titles":
+              table = Table(title="[bold yellow]Journal Entries[/bold yellow]")
+              table.add_column("Date", justify="center", style="cyan")
+              table.add_column("Title", justify="center", style="green")
               for diary in journal:
-                console.print(Align(f"[italic green] Title:[/italic green] {diary['Title']}",align="center"))
-                console.input(Align("Press enter to continue",align="center",style="Bold yellow"))
+                  table.add_row(diary["Date"], diary["Title"])
+              console.print(Align.center(table))
             elif choice=="📚 View all diaries" :
               for diary in journal:
                 console.print(Align(f"[italic green] Title:[/italic green] {diary['Title']}",align="center"))
