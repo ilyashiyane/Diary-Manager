@@ -5,13 +5,16 @@ from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
+from rich.text import Text
+from questionary import Style
 def Edit(name) :
                 console=Console()
                 load_dotenv()
                 diaries_path=os.getenv("DIARIES_PATH")
                 with open(f"{diaries_path}/{name}.json", "r", encoding="utf-8") as file:
                      journal = json.load(file)
-                title = input("Please provide the title of the diary you want to edit. ")
+                demande_title=Text("Please provide the title of the diary you want to edit : ",style="bold yellow")
+                title = console.input(demande_title)
                 found=False
                 for diaries in journal :
                      if diaries["Title"]==title :
@@ -26,6 +29,9 @@ def Edit(name) :
                           break
                      
                 console.print(Align("Choose what you want to do:",align="center",style="italic green"))
+                custom_style = Style([
+    ("question", "bold fg:#FFFF00"),  # jaune + bold
+])
                 choice = questionary.select(
     "What would you like to edit?",
     choices=[
@@ -33,7 +39,8 @@ def Edit(name) :
         "📝 Edit the text",
         "🖋️ Edit both title and text",
         "🚪 Exit"
-    ]
+    ],
+    style=custom_style
 ).ask()
                 
                     

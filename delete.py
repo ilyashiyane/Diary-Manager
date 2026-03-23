@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 from rich.console import Console
 from rich.align import Align
-
+from rich.text import Text
 
 def Delete(name) :
         console=Console()
@@ -18,8 +18,8 @@ def Delete(name) :
         #except FileNotFoundError:
                 #journal = []
         elif  journal:
-                    
-         title = input("Please provide the title of the diary you want to delete.")
+         demand_title=Text("Please provide the title of the diary you want to delete :",style="bold yellow")  
+         title = console.input(demand_title)
          for diary in journal :
             if diary["Title"].lower()==title.lower() :
                 journal.remove(diary)
