@@ -17,7 +17,6 @@ def AddUser() :
      for user in users:
             if user["name"] == name:
                 duplicate = True
-                #print("This username already exists. Choose a different name.")
                 break
      if duplicate:
             print("This username already exists. Try logging in or choose a different name.")

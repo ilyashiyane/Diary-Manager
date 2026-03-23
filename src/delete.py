@@ -15,8 +15,7 @@ def Delete(name) :
         if not journal:
                     console.print(Align("No diaries found.",align="center",style="bold red"))
                     return
-        #except FileNotFoundError:
-                #journal = []
+        
         elif  journal:
          demand_title=Text("Please provide the title of the diary you want to delete :",style="bold yellow")  
          title = console.input(demand_title)

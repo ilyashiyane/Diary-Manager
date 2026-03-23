@@ -23,6 +23,4 @@ def Admin() :
                     print("Logging out...")
                     from user_creation import connect
                     connect()
-            #elif choice == "5":
-                    #print("Goodbye!")
-                    #pass
+            

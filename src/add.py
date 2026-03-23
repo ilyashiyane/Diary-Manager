@@ -23,8 +23,6 @@ def Add(name) :
      hour = console.input(demande_hour)
      if not dats.strip() or not hour.strip():
             console.print("[bold red] Enter both date and time. Leaving either blank will default to the current date and time.")
-            #demande_of_choice=Text("Press 1 for the current date and time, or 0 to enter your own date and hour. ",style="bold yellow")
-            #i = console.input(demande_of_choice)
             custom_style = Style([
     ("question", "bold fg:#FFFF00"),  # jaune + bold
 ])

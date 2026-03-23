@@ -1,4 +1,4 @@
-from user_creation import connect
+from src.user_creation import connect
 connect()
 
 

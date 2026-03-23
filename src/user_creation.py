@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from rich.align import Align
 from rich.console import Console
 from rich.panel import Panel
-from password_criteria import password_criteria
+from .password_criteria import password_criteria
 import hashlib
 from questionary import Style
 def connect():
@@ -74,7 +74,7 @@ def connect():
                     break
             if found:
                 console.print(Align("Login successful.",align="center",style="italic green"))
-                from actions import Actions
+                from .actions import Actions
                 Actions(name)
                 break  
             else:
@@ -118,7 +118,7 @@ def connect():
              with open(f"{diaries_path}/{name}.json", "x", encoding="utf-8") as file:
                 json.dump([], file, indent=4, ensure_ascii=False)
              break
-          from actions import Actions
+          from .actions import Actions
           Actions(name)
         elif choice == "🛡️ Log in as admin":
             demande_name=Text("Enter your name: ",style="bold yellow")
@@ -138,7 +138,7 @@ def connect():
                     break
             if found:
                 console.print(Align("Admin login successful.",align="center",style="italic green"))
-                from admin import Admin
+                from .admin import Admin
                 Admin()
                 break  
             else:

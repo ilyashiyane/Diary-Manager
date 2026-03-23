@@ -30,7 +30,7 @@ def Edit(name) :
                      
                 console.print(Align("Choose what you want to do:",align="center",style="italic green"))
                 custom_style = Style([
-    ("question", "bold fg:#FFFF00"),  # jaune + bold
+    ("question", "bold fg:#FFFF00"),  
 ])
                 choice = questionary.select(
     "What would you like to edit?",
@@ -101,5 +101,5 @@ def Edit(name) :
                             break
                 elif choice == "🚪 Exit":
                     console.print(Align("Exiting the edit menu.",align="center",style="bold red"))
-                    from actions import Actions
+                    from .actions import Actions
                     Actions(name)
