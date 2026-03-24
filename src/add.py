@@ -18,9 +18,20 @@ def Add(name) :
      except FileNotFoundError:
                 journal = []
      demande_dats=Text("Please provide a date in this format: year-month-day (YYYY-MM-DD) :",style="bold yellow")
-     dats = console.input(demande_dats)
+     try :
+            dats = console.input(demande_dats)
+     except KeyboardInterrupt :
+            console.print("\nReturning to main menu...", style="bold yellow")
+            return
+            
+     #demande_dats=Text("Please provide a date in this format: year-month-day (YYYY-MM-DD) :",style="bold yellow")
+     #dats = console.input(demande_dats)
      demande_hour=Text("Please provide the current time as Hour:Minute (HH:MM) :",style="bold yellow")
-     hour = console.input(demande_hour)
+     try:
+         hour = console.input(demande_hour)
+     except KeyboardInterrupt :
+            console.print("\nReturning to main menu...", style="bold yellow")
+            return
      if not dats.strip() or not hour.strip():
             console.print("[bold red] Enter both date and time. Leaving either blank will default to the current date and time.")
             custom_style = Style([

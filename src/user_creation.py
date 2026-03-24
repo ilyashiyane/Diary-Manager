@@ -88,10 +88,15 @@ def connect():
                     console.print(Align("Too many failed attempts. Exiting.",align="center",style="bold red"))
                     exit()  
         elif choice == "🆕 Create a new account":  
+         try :
           while True :
             demande_name=Text("Enter your name: ",style="bold yellow")
-            
-            name = console.input(demande_name)
+            try:
+             name = console.input(demande_name)
+            except KeyboardInterrupt:
+             console.print("\nReturning to main menu...", style="bold yellow")
+             name = None
+             break 
             if name=="" or len(name)<3 or len(name)>30 :
                 console.print(Align("Username cannot be empty and must be between 3 and 30 characters long. Please enter a valid username.",align="center",style="bold red"))
                 continue
@@ -106,27 +111,32 @@ def connect():
             if duplicate:
                 console.print(Align("This username already exists. Try logging in or choose a different name.",align="center",style="bold red"))
                 continue 
-            break
-          while True :
-            demande_password=Text("Enter your password: ",style="bold yellow")
-            console.print(demande_password,end="")
-            password = getpass.getpass("")
-            from .password_criteria import password_criteria
-            if not password_criteria(password) : 
+            
+            while True :
+             demande_password=Text("Enter your password: ",style="bold yellow")
+             console.print(demande_password,end="")
+             password = getpass.getpass("")
+             from .password_criteria import password_criteria
+             if not password_criteria(password) : 
                 console.print(Align("Password must be at least 8 characters long.",align="center",style="bold red"))
                 continue
-            elif password_criteria(password) :
-             password_hash=hashlib.sha256(password.encode()).hexdigest()
-             user = {"name": name, "password": [password_hash]}
-             users.append(user)
-             with open(file_path, "w", encoding="utf-8") as file:
+             elif password_criteria(password) :
+              password_hash=hashlib.sha256(password.encode()).hexdigest()
+              user = {"name": name, "password": [password_hash]}
+              users.append(user)
+              with open(file_path, "w", encoding="utf-8") as file:
                 json.dump(users, file, indent=4, ensure_ascii=False)
-             console.print(Align("Account created successfully. Please log in again.",align="center",style="italic green"))
-             with open(f"{diaries_path}/{name}.json", "x", encoding="utf-8") as file:
+              console.print(Align("Account created successfully. Please log in again.",align="center",style="italic green"))
+              with open(f"{diaries_path}/{name}.json", "x", encoding="utf-8") as file:
                 json.dump([], file, indent=4, ensure_ascii=False)
-             break
-          from .actions import Actions
-          Actions(name)
+              break
+            break
+         except KeyboardInterrupt:
+           console.print("\nReturning to main menu...", style="bold yellow")
+           name = None
+         if name is not None:
+           from .actions import Actions
+           Actions(name)
         elif choice == "🛡️ Log in as admin":
             demande_name=Text("Enter your name: ",style="bold yellow")
             try :
