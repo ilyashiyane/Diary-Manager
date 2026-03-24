@@ -27,7 +27,6 @@ def connect():
         demande_name=Text("Enter your name: ",style="bold yellow")
         name = console.input(demande_name)
         password = getpass.getpass("Enter your password: ")
-        
         password_second = getpass.getpass("Enter the second password: ")
         while password == password_second :
               console.print(Align("Passwords must not be the same . Please change the second password.",align="center",style="bold red"))
@@ -48,7 +47,7 @@ def connect():
     ("question", "bold fg:#FFFF00"),  # jaune + bold
 ])
         choice = questionary.select(
-    "Choose an option:",
+    "Choose an option:(press control c in order to go back while putting inputs)",
     choices=[
         "🆕 Create a new account",
         "👤 Log in as a normal user",
@@ -62,7 +61,11 @@ def connect():
                 console.print(Align("There is no user please create one first by pressing 0",align="center",style="bold red"))
                 continue
             demande_name=Text("Enter your name: ", style="bold yellow")
-            name = console.input(demande_name)
+            try :
+                name = console.input(demande_name)
+            except KeyboardInterrupt :
+                 console.print("\nReturning to main menu...", style="bold yellow")
+                 continue
             demande_password=Text("Enter your password: ",style="bold yellow")
             console.print(demande_password, end="")
             password = getpass.getpass("")
@@ -87,9 +90,13 @@ def connect():
         elif choice == "🆕 Create a new account":  
           while True :
             demande_name=Text("Enter your name: ",style="bold yellow")
+            
             name = console.input(demande_name)
-            if name=="" or len(name)<3 or len(name)>30:
+            if name=="" or len(name)<3 or len(name)>30 :
                 console.print(Align("Username cannot be empty and must be between 3 and 30 characters long. Please enter a valid username.",align="center",style="bold red"))
+                continue
+            elif not name.isalnum() :
+                console.print(Align("Username must be only in alphabetics and numeric.Please enter a valid username.",align="center",style="bold red"))
                 continue
             duplicate = False
             for user in users:
@@ -104,7 +111,7 @@ def connect():
             demande_password=Text("Enter your password: ",style="bold yellow")
             console.print(demande_password,end="")
             password = getpass.getpass("")
-            from password_criteria import password_criteria
+            from .password_criteria import password_criteria
             if not password_criteria(password) : 
                 console.print(Align("Password must be at least 8 characters long.",align="center",style="bold red"))
                 continue
@@ -122,7 +129,11 @@ def connect():
           Actions(name)
         elif choice == "🛡️ Log in as admin":
             demande_name=Text("Enter your name: ",style="bold yellow")
-            name = console.input(demande_name)
+            try :
+                name = console.input(demande_name)
+            except KeyboardInterrupt :
+                 console.print("\nReturning to main menu...", style="bold yellow")
+                 continue
             demande_password=Text("Enter your password: ",style="bold yellow")
             console.print(demande_password,end="")
             password = getpass.getpass("")
