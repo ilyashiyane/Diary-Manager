@@ -24,9 +24,6 @@ def Add(name) :
      except KeyboardInterrupt :
             console.print("\nReturning to main menu...", style="bold yellow")
             return
-            
-     #demande_dats=Text("Please provide a date in this format: year-month-day (YYYY-MM-DD) :",style="bold yellow")
-     #dats = console.input(demande_dats)
      demande_hour=Text("Please provide the current time as Hour:Minute (HH:MM) :",style="bold yellow")
      try:
          hour = console.input(demande_hour)

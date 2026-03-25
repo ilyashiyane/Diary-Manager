@@ -1,26 +1,41 @@
+import questionary
+from questionary import Style
+from rich.console import Console
+from rich.align import Align
 def Admin() :
-            print(20 * " " + "Admin dashboard" + " " * 20)
-            print("1. Show all users")
-            print("2. Delete a user")
-            print("3. Add a user")
-            print("4. Log out")
-            print("5. Exit")
-            choice = input("Please select an option (1-4): ")
-            if choice not in ["1", "2", "3", "4"]:
-                print("Invalid choice. Please select 1, 2, 3, or 4.")
-                choice = input("Please select an option (1-4): ")
-            elif choice == "1":
-                    from show_users import ShowUsers
+        while True :
+            console=Console()
+            console.print(Align("Admin dashboard",align="center",style="italic green"))
+            #console.print("Admin dashboard")
+            custom_style = Style([
+    ("question", "bold fg:#FFFF00"),  # jaune + bold
+])
+            choice = questionary.select(
+    "Choose an option:(press control c in order to go back while putting inputs)",
+    choices=[
+        "👥 Show all users",
+        "🗑️ Delete a user",
+        "➕ Add a user",
+        "🔒 Log out",
+        #"❌ Exit"
+    ],
+    style=custom_style
+).ask()
+             
+            if choice == "👥 Show all users":
+                    from .show_users import ShowUsers
                     ShowUsers()
-            elif choice == "2":
-                    from delete_admin import DeleteAdmin
+                    console.input(Align("Press to continue",align="center",style="bold yellow"))
+            elif choice == "🗑️ Delete a user":
+                    from .delete_admin import DeleteAdmin
                     DeleteAdmin()
-            elif choice == "3":
-                    from add_user import AddUser
+            elif choice == "➕ Add a user":
+                    from .add_user import AddUser
                     AddUser()
                     
-            elif choice == "4":
+            elif choice == "🔒 Log out":
                     print("Logging out...")
-                    from user_creation import connect
+                    from .user_creation import connect
                     connect()
+                    
             

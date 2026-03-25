@@ -152,11 +152,19 @@ def connect():
                  continue
             demande_password=Text("Enter your password: ",style="bold yellow")
             console.print(demande_password,end="")
-            password = getpass.getpass("")
+            try :
+                password = getpass.getpass("")
+            except KeyboardInterrupt :
+                console.print("\nReturning to main menu...", style="bold yellow")
+                continue
             password_hash=hashlib.sha256(password.encode()).hexdigest()
             demande_password_second=Text("Enter your second password: ",style="bold yellow")
             console.print(demande_password_second,end="")
-            password_second = getpass.getpass("")
+            try :
+                password_second = getpass.getpass("")
+            except :
+                console.print("\nReturning to main menu...", style="bold yellow")
+                continue
             password_second_hash=hashlib.sha256(password_second.encode()).hexdigest()
             found = False
             for user in users:
