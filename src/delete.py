@@ -18,7 +18,11 @@ def Delete(name) :
         
         elif  journal:
          demand_title=Text("Please provide the title of the diary you want to delete :",style="bold yellow")  
-         title = console.input(demand_title)
+         try :
+          title = console.input(demand_title)
+         except KeyboardInterrupt :
+          console.print("\nReturning to main menu...", style="bold yellow")
+          return 
          for diary in journal :
             if diary["Title"].lower()==title.lower() :
                 journal.remove(diary)

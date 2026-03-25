@@ -14,7 +14,11 @@ def Edit(name) :
                 with open(f"{diaries_path}/{name}.json", "r", encoding="utf-8") as file:
                      journal = json.load(file)
                 demande_title=Text("Please provide the title of the diary you want to edit : ",style="bold yellow")
-                title = console.input(demande_title)
+                try :
+                 title = console.input(demande_title)
+                except KeyboardInterrupt :
+                 console.print("\nReturning to main menu...", style="bold yellow")
+                 return
                 found=False
                 for diaries in journal :
                      if diaries["Title"]==title :
@@ -32,7 +36,9 @@ def Edit(name) :
                 custom_style = Style([
     ("question", "bold fg:#FFFF00"),  
 ])
-                choice = questionary.select(
+                while True :
+                 try :
+                  choice = questionary.select(
     "What would you like to edit?",
     choices=[
         "✏️ Edit the title",
@@ -42,19 +48,20 @@ def Edit(name) :
     ],
     style=custom_style
 ).ask()
-                
-                    
-
-                if choice == "✏️ Edit the title":
+                  if choice == "✏️ Edit the title":
                     for diary in journal:
                         if diary["Title"].lower() == title.lower():
+                            #try :
                             new_title = input("Enter the new title: ").strip()
+                            #except KeyboardInterrupt :
+                             #console.print("\nReturning to main menu...", style="bold yellow")
+                             #continue
                             diary["Title"] = new_title
                             with open(f"{diaries_path}/{name}.json", "w", encoding="utf-8") as file:
                                 json.dump(journal, file, indent=4, ensure_ascii=False)
                             console.print(Align("The title has been edited.",align="center",style="italic green"))
                             break
-                elif choice == "📝 Edit the text":
+                  elif choice == "📝 Edit the text":
                     lines = []
                     console.print(Align("Enter the new text (type 'End' on a new line to finish):",align="center",style="italic green"))
                     while True:
@@ -75,7 +82,7 @@ def Edit(name) :
                             console.print(Align("The text has been edited.",align="center",style="italic green"))
                             break
 
-                elif choice == "🖋️ Edit both title and text":
+                  elif choice == "🖋️ Edit both title and text":
                     new_title = input("Give the new title: ").strip()
                     lines = []
                     console.print(Align("Enter the new text (type 'End' on a new line to finish):",align="center",style="italic green"))
@@ -99,7 +106,10 @@ def Edit(name) :
                             console.print(Align("The title and the text have been edited.",align="center",style="italic green"))
                             
                             break
-                elif choice == "🚪 Exit":
+                  elif choice == "🚪 Exit":
                     console.print(Align("Exiting the edit menu.",align="center",style="bold red"))
                     from .actions import Actions
                     Actions(name)
+                 except KeyboardInterrupt :
+                     console.print("\nReturning to edit menu...", style="bold yellow")
+                     continue

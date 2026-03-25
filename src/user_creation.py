@@ -66,9 +66,15 @@ def connect():
             except KeyboardInterrupt :
                  console.print("\nReturning to main menu...", style="bold yellow")
                  continue
+            
             demande_password=Text("Enter your password: ",style="bold yellow")
-            console.print(demande_password, end="")
-            password = getpass.getpass("")
+            try :
+               console.print(demande_password, end="")
+               password = getpass.getpass("")
+            except KeyboardInterrupt :
+               console.print("\nReturning to main menu...", style="bold yellow")
+               continue
+               
             password_hash=hashlib.sha256(password.encode()).hexdigest()
             found = False
             for user in users:

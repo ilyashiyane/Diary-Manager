@@ -11,7 +11,11 @@ def SearchByTitle(name) :
         with open(f"{diaries_path}/{name}.json", "r", encoding="utf-8") as file:
                 journal = json.load(file)
         demande_title=Text("Please provide the title of the diary you want to search for : ",style="bold yellow")
-        title = console.input(demande_title)
+        try :
+         title = console.input(demande_title)
+        except KeyboardInterrupt :
+         console.print("\nReturning to main menu...", style="bold yellow")
+         return
         for diary in journal:
                     if diary["Title"].lower() == title.lower():
                         print(f"Date: {diary['Date']}")

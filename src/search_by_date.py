@@ -13,7 +13,12 @@ def SearchByDate(name):
     with open(f"{diaries_path}/{name}.json", "r", encoding="utf-8") as file:
                 journal = json.load(file)
     demande_dat=Text("Please provide a date in this format: year-month-day (YYYY-MM-DD) : ",style="bold yellow")
-    dat = console.input(demande_dat)
+    try :
+     dat = console.input(demande_dat)
+    except KeyboardInterrupt :
+     console.print("\nReturning to main menu...", style="bold yellow")
+     return
+            
     found=False
     for diary in journal:
                     if diary["Date"].startswith(dat):

@@ -67,14 +67,22 @@ def Add(name) :
      title = ""
      while not title:
             demande_title=Text("Provide the title: ",style="bold yellow")
-            title = console.input(demande_title).strip()
+            try :
+             title = console.input(demande_title).strip()
+            except KeyboardInterrupt :
+             console.print("\nReturning to main menu...", style="bold yellow")
+             return
             if not title:
                 console.print(Align("The title is necessary—please insert it!",align="center",style="bold red"))
 
      lines = []
      console.print(Align("Write you diary here",align="center",style="italic green"))
      while True:
-        line = input()
+        try :
+         line = input()
+        except KeyboardInterrupt :
+         console.print("\nReturning to main menu...", style="bold yellow")
+         return
         if line.lower() == "end" or not line:
                     console.print(Align("Your diary is added",align="center",style="italic green"))
                     break
