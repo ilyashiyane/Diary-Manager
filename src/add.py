@@ -8,6 +8,7 @@ from rich.align import Align
 from rich.text import Text
 import os
 from questionary import Style
+import subprocess
 def Add(name) :
      console=Console()
      load_dotenv()
@@ -77,19 +78,34 @@ def Add(name) :
 
      lines = []
      console.print(Align("Write you diary here",align="center",style="italic green"))
-     while True:
-        try :
-         line = input()
-        except KeyboardInterrupt :
-         console.print("\nReturning to main menu...", style="bold yellow")
+     console.print(Align("A text editor (Notepad) will open. Write your journal, save it (Ctrl+S), and close the window.", align="center", style="italic green"))
+     
+     # 1. Nom du fichier temporaire invisible
+     temp_file = "temp_diary.txt"
+     
+     # 2. Création d'un fichier vide pour l'éditeur
+     with open(temp_file, "w", encoding="utf-8") as file:
+         file.write("")
+         
+     # 3. Ouverture du Bloc-Notes et PAUSE du script Python jusqu'à la fermeture
+     subprocess.run(["notepad", temp_file])
+     
+     # 4. Quand l'utilisateur ferme Notepad, Python se réveille et lit le fichier
+     with open(temp_file, "r", encoding="utf-8") as file:
+         text = file.read().strip() # .strip() enlève les espaces vides au début/fin
+         
+     # 5. On supprime le fichier temporaire pour ne laisser aucune trace 
+     # (Très important pour la confidentialité !)
+     if os.path.exists(temp_file):
+         os.remove(temp_file)
+         
+     # 6. Vérification au cas où l'utilisateur n'a rien écrit du tout
+     if not text:
+         console.print(Align("Addition canceled: You didn’t write anything in Notepad.", align="center", style="bold red"))
          return
-        if line.lower() == "end" or not line:
-                    console.print(Align("Your diary is added",align="center",style="italic green"))
-                    break
-        else:
-                   lines.append(line)
+         
+     console.print(Align("Your diary is added", align="center", style="italic green"))
 
-     text = "\n".join(lines)
 
      diaries = {
                 "Date": dates.isoformat(),
