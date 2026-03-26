@@ -28,13 +28,13 @@ def Actions(name):
     "What would you like to do today?",
     choices=[
         "📖 Add a new diary",
+        "📖 Edit a diary",
         "📂 View all diaries",
         "🔍 Search for a diary by date",
         "🔍 Search for a diary by title",
-        "📖 Edit a diary",
+        "📤 Share a Diary",
         "🗑️ Delete a diary",
-        "⚙️ Settings",
-        "🚪 Log out"
+        "🏠 Go to Main Menu"
     ],
     style=custom_style
 ).ask()
@@ -43,7 +43,13 @@ def Actions(name):
                   console.print(Panel(text))
                   from .add import Add
                   Add(name)
-                  console.input(Align("Press enter to continue",align="center",style="Bold yellow"))
+            elif choice == "📖 Edit a diary":
+                    text=Align("EDIT A DIARY",align="center")
+                    console.print(Panel(text))
+                    from .edit import Edit
+                    Edit(name)
+                    console.input(Align("Press enter to continue",align="center",style="Bold yellow"))
+                    console.input(Align("Press enter to continue",align="center",style="Bold yellow"))
             elif choice == "📂 View all diaries":
                   text=Align("View ALL DIARIES",align="center")
                   console.print(Panel(text))
@@ -62,26 +68,21 @@ def Actions(name):
                    from .search_by_title import SearchByTitle
                    SearchByTitle(name)
                    console.input(Align("Press enter to continue",align="center",style="Bold yellow"))
+            elif choice=="📤 Share a Diary" :
+                    print("coming soon")
+                    pass
             elif choice == "🗑️ Delete a diary":
                     text=Align("DELETE A DIARY",align="center")
                     console.print(Panel(text))
                     from .delete import Delete
                     Delete(name)
                     console.input(Align("Press enter to continue",align="center",style="Bold yellow"))
-            elif choice == "📖 Edit a diary":
-                    text=Align("EDIT A DIARY",align="center")
+            elif choice == "🏠 Go to Main Menu":
+                    text=Align("Main Menu",align="center")
                     console.print(Panel(text))
-                    from .edit import Edit
-                    Edit(name)
-                    console.input(Align("Press enter to continue",align="center",style="Bold yellow"))
-            elif choice == "⚙️ Settings":
-                   pass
-            elif choice == "🚪 Log out":
-                    text=Align("LOG OUT",align="center")
-                    console.print(Panel(text))
-                    console.print("Logging out...",style="bold red")
-                    from .user_creation import connect
-                    connect()
+                    #console.print("Logging out...",style="bold red")
+                    from .main_actions import main_actions
+                    main_actions(name)
                     
             
                    

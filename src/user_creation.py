@@ -52,7 +52,7 @@ def connect():
         "🆕 Create a new account",
         "👤 Log in as a normal user",
         "🛡️ Log in as admin",
-        "🚪 Log out"
+        "🚪 Exit the application"
     ],
     style=custom_style
 ).ask()  
@@ -83,8 +83,8 @@ def connect():
                     break
             if found:
                 console.print(Align("Login successful.",align="center",style="italic green"))
-                from .actions import Actions
-                Actions(name)
+                from .main_actions import main_actions
+                main_actions(name)
                 break  
             else:
                 console.print(Align("Error: Invalid credentials. Please try again.",align="center",style="bold red"))
@@ -141,8 +141,8 @@ def connect():
            console.print("\nReturning to main menu...", style="bold yellow")
            name = None
          if name is not None:
-           from .actions import Actions
-           Actions(name)
+           from .main_actions import main_actions
+           main_actions(name)
         elif choice == "🛡️ Log in as admin":
             demande_name=Text("Enter your name: ",style="bold yellow")
             try :
@@ -183,7 +183,7 @@ def connect():
                 if i >= 3:
                     console.print(Align("Too many failed attempts. Exiting.",align="center",style="bold red"))
                     exit()  
-        elif choice=="🚪 Log out" :
+        elif choice=="🚪 Exit the application" :
             console.print("Logging out... ",style="bold red")
             sys.exit()
     
