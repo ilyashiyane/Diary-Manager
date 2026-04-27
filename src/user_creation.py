@@ -12,6 +12,8 @@ from .password_criteria import password_criteria
 import hashlib
 from questionary import Style
 def connect():
+    #def clear_screen():
+                #os.system('cls' if os.name == 'nt' else 'clear')
     console=Console()
     load_dotenv()
     diaries_path=os.getenv("DIARIES_PATH")
@@ -57,6 +59,7 @@ def connect():
     style=custom_style
 ).ask()  
         if choice == "👤 Log in as a normal user":
+            
             if len(users)==1 :
                 console.print(Align("There is no user please create one first by pressing 0",align="center",style="bold red"))
                 continue
@@ -93,6 +96,7 @@ def connect():
                 if i >= 3:
                     console.print(Align("Too many failed attempts. Exiting.",align="center",style="bold red"))
                     exit()  
+            
         elif choice == "🆕 Create a new account":  
          try :
           while True :
