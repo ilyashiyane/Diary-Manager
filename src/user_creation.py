@@ -3,6 +3,7 @@ import getpass
 import os 
 import questionary
 import sys
+import bcrypt
 from rich.text import Text
 from dotenv import load_dotenv
 from rich.align import Align
