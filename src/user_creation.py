@@ -37,8 +37,8 @@ def connect():
               if password != password_second :
                     console.print(Align("Passwords are different. Account created successfully.",align="center",style="italic green"))
                     break
-        password_hash=hashlib.sha256(password.encode()).hexdigest()
-        password_hash_second=hashlib.sha256(password_second.encode()).hexdigest()
+        password_hash=bcrypt.hashpw(password.encode(),bcrypt.gensalt()).decode()
+        password_hash_second=bcrypt.hashpw(password_second.encode(),bcrypt.gensalt()).decode()
         user = {"name": name, "password": [password_hash, password_hash_second]}
         users.append(user)
         with open(file_path, "w", encoding="utf-8") as file:
@@ -78,11 +78,9 @@ def connect():
             except KeyboardInterrupt :
                console.print("\nReturning to main menu...", style="bold yellow")
                continue
-               
-            password_hash=hashlib.sha256(password.encode()).hexdigest()
             found = False
             for user in users:
-                if user["name"] == name and user["password"][0] == password_hash:
+                if user["name"] == name and bcrypt.checkpw(password.encode(),user["password"][0].encode()):
                     found = True
                     break
             if found:
@@ -132,7 +130,7 @@ def connect():
                 console.print(Align("Password must be at least 8 characters long.",align="center",style="bold red"))
                 continue
              elif password_criteria(password) :
-              password_hash=hashlib.sha256(password.encode()).hexdigest()
+              password_hash=bcrypt.hashpw(password.encode(),bcrypt.gensalt()).decode()
               user = {"name": name, "password": [password_hash]}
               users.append(user)
               with open(file_path, "w", encoding="utf-8") as file:
@@ -162,7 +160,6 @@ def connect():
             except KeyboardInterrupt :
                 console.print("\nReturning to main menu...", style="bold yellow")
                 continue
-            password_hash=hashlib.sha256(password.encode()).hexdigest()
             demande_password_second=Text("Enter your second password: ",style="bold yellow")
             console.print(demande_password_second,end="")
             try :
@@ -170,10 +167,9 @@ def connect():
             except :
                 console.print("\nReturning to main menu...", style="bold yellow")
                 continue
-            password_second_hash=hashlib.sha256(password_second.encode()).hexdigest()
             found = False
             for user in users:
-                if user["name"] == name and user["password"][0] == password_hash and user["password"][1] == password_second_hash :
+                if user["name"] == name and bcrypt.checkpw(password.encode(),user["password"][0].encode()) and bcrypt.checkpw(password_second.encode(),user["password"][1].encode()) :
                     found = True
                     break
             if found:
