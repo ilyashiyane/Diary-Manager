@@ -169,7 +169,7 @@ def connect():
                 continue
             found = False
             for user in users:
-                if user["name"] == name and bcrypt.checkpw(password.encode(),user["password"][0].encode()) and bcrypt.checkpw(password_second.encode(),user["password"][1].encode()) :
+                if user["name"] == name and len(user["password"]) >= 2 and bcrypt.checkpw(password.encode(),user["password"][0].encode()) and bcrypt.checkpw(password_second.encode(),user["password"][1].encode()) :
                     found = True
                     break
             if found:
